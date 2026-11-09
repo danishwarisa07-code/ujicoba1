@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi Kelas - Co kelompok 5</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        seablue: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        french: {
+                            blue: '#0055A4',
+                            white: '#FFFFFF',
+                            red: '#EF4135'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff; 
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Custom Scrollbar for Transcript */
+        .transcript-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .transcript-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .transcript-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        .transcript-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .speaker-name {
+            font-weight: 600;
+            color: #0369a1; /* seablue-700 */
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800 flex flex-col">
+
+    <!-- Top Bleu-Blanc-Rouge Ribbon -->
+    <div class="fixed top-0 left-0 w-full h-1.5 flex z-50">
+        <div class="w-1/3 bg-french-blue"></div>
+        <div class="w-1/3 bg-gray-100"></div>
+        <div class="w-1/3 bg-french-red"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm pt-2 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Back Button -->
+                <div class="flex items-center gap-4">
+                    <button onclick="window.history.back()" class="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-600 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div class="flex items-center gap-3 border-l pl-4 border-gray-200">
+                        <div class="w-8 h-8 bg-seablue-100 rounded-lg flex items-center justify-center shadow-inner">
+                            <i class="fa-solid fa-water text-sm text-seablue-600"></i>
+                        </div>
+                        <span class="font-bold text-lg text-gray-800">Ruang Materi</span>
+                    </div>
+                </div>
+                
+                <!-- Quick Action -->
+                <div class="flex items-center gap-3">
+                    <button class="bg-seablue-600 hover:bg-seablue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> Unduh Modul
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Grid -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Compréhension Orale : Gastronomie Lyonnaise</h1>
+            <p class="text-gray-600">Fokus Pembelajaran: Menyimak dan memahami percakapan autentik berbahasa Prancis.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-[calc(100vh-220px)] min-h-[600px]">
+            
+            <!-- Left Column: Guidelines & Instructions (Span 4) -->
+            <div class="lg:col-span-4 flex flex-col gap-6 h-full overflow-y-auto pr-2 pb-4">
+                
+                <!-- Strategy Card -->
+                <div class="bg-gradient-to-br from-seablue-800 to-seablue-900 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-white opacity-10 rounded-full blur-xl"></div>
+                    <div class="flex items-center gap-3 mb-4 relative z-10">
+                        <i class="fa-solid fa-ear-listen text-2xl text-yellow-300"></i>
+                        <h2 class="text-xl font-bold">Strategi Menyimak</h2>
+                    </div>
+                    <p class="text-seablue-100 text-sm mb-5 leading-relaxed relative z-10">
+                        Untuk menguasai <strong>Compréhension Orale</strong> secara akurat, ikuti 3 tahapan krusial berikut:
+                    </p>
+                    
+                    <ul class="space-y-4 relative z-10">
+                        <li class="bg-black/20 rounded-xl p-3 border border-white/10">
+                            <span class="block text-yellow-300 font-semibold text-sm mb-1">1. L'écoute Globale (Menyimak Keseluruhan)</span>
+                            <span class="text-xs text-seablue-50">Fokus pada konteks utama. Jangan hentikan audio meski ada kata yang tidak dimengerti. Kenali siapa yang berbicara dan situasinya.</span>
+                        </li>
+                        <li class="bg-black/20 rounded-xl p-3 border border-white/10">
+                            <span class="block text-yellow-300 font-semibold text-sm mb-1">2. L'écoute Détaillée (Menyimak Detail)</span>
+                            <span class="text-xs text-seablue-50">Putar audio kembali. Mulai catat kata kunci (mots-clés) seperti nama hidangan (quenelle, pâté en croûte), bahan, dan ekspresi emosi.</span>
+                        </li>
+                        <li class="bg-black/20 rounded-xl p-3 border border-white/10">
+                            <span class="block text-yellow-300 font-semibold text-sm mb-1">3. Validation par la Transcription</span>
+                            <span class="text-xs text-seablue-50">Gunakan dokumen transkrip di sebelah kanan untuk memvalidasi pendengaran Anda dan mempelajari ejaan kosakata yang baru.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Vocab Helper -->
+                <div class="glass-card rounded-2xl p-6 shadow-sm">
+                    <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-book-bookmark text-french-red"></i> Mots-Clés (Kosakata)
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="font-medium text-seablue-700">Un bouchon</span>
+                            <span class="text-gray-500 text-right">Restoran tradisional Lyon</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="font-medium text-seablue-700">La quenelle</span>
+                            <span class="text-gray-500 text-right">Pangsit ikan/daging khas</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="font-medium text-seablue-700">Pâté en croûte</span>
+                            <span class="text-gray-500 text-right">Pâté dalam balutan pastry</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="font-medium text-seablue-700">Saignant</span>
+                            <span class="text-gray-500 text-right">Tingkat kematangan rare (daging)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="font-medium text-seablue-700">Exigu</span>
+                            <span class="text-gray-500 text-right">Sempit (ruangan)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Document Viewer (Span 8) -->
+            <div class="lg:col-span-8 bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col h-full overflow-hidden">
+                
+                <!-- Document Header -->
+                <div class="bg-gray-50 border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-blue-100 text-blue-600 rounded-lg">
+                            <i class="fa-regular fa-file-word text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 text-sm">Document Référence:</h3>
+                            <p class="text-xs font-mono text-gray-500 bg-gray-200 px-2 py-0.5 rounded mt-0.5 inline-block">
+                                Transcript_Bouchon_Lyonnais_Joseph_Viola.docx
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="w-8 h-8 rounded hover:bg-gray-200 flex items-center justify-center text-gray-600" title="Perbesar Teks">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </button>
+                        <button class="w-8 h-8 rounded hover:bg-gray-200 flex items-center justify-center text-gray-600" title="Cetak">
+                            <i class="fa-solid fa-print"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Document Content (Scrollable) -->
+                <div class="p-8 md:p-12 overflow-y-auto transcript-scroll bg-[#fafafa]">
+                    <div class="max-w-3xl mx-auto bg-white p-10 shadow-sm border border-gray-100 rounded">
+                        
+                        <div class="text-center mb-8 border-b-2 border-seablue-800 pb-6">
+                            <h2 class="text-2xl font-bold uppercase tracking-wider text-gray-900">Transcription Intégrale</h2>
+                            <p class="text-lg italic text-gray-600 mt-2">« Un bouchon lyonnais mythique » — C'est meilleur quand c'est bon</p>
+                        </div>
+
+                        <!-- Meta Table -->
+                        <table class="w-full text-sm mb-8 border-collapse">
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="py-2 font-semibold text-gray-700 w-1/3">Titre de la vidéo :</td>
+                                    <td class="py-2 text-gray-600">Un bouchon lyonnais mythique</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="py-2 font-semibold text-gray-700">Chaîne YouTube :</td>
+                                    <td class="py-2 text-gray-600">C'est meilleur quand c'est bon</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="py-2 font-semibold text-gray-700">Lieu & Personnalité :</td>
+                                    <td class="py-2 text-gray-600">Lyon, Bouchon traditionnel du Chef Joseph Viola (MOF)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 font-semibold text-gray-700 align-top">Thématique :</td>
+                                    <td class="py-2 text-gray-600">Gastronomie lyonnaise, bouchons traditionnels, spécialités du terroir</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-sm italic text-gray-500 mb-8 p-4 bg-gray-50 rounded-lg border-l-4 border-seablue-400">
+                            Ce document contient la transcription textuelle complète et ordonnée de la vidéo consacrée au bouchon traditionnel lyonnais du chef Joseph Viola, tirée de l'émission culinaire « C'est meilleur quand c'est bon ». Il constitue un support pédagogique idéal pour l'étude du vocabulaire de la cuisine lyonnaise et du patrimoine gastronomique français.
+                        </p>
+
+                        <!-- Section 1 -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-seablue-800 mb-4 pb-1 border-b border-gray-200">1. Introduction et Arrivée au Bouchon Lyonnais</h3>
+                            <div class="space-y-4 text-gray-800 leading-relaxed">
+                                <p><span class="speaker-name">Présentatrice :</span> Ça, c'est la cuisine lyonnaise, hein ! Généreux, de la sauce, de la crème.</p>
+                                <p><span class="speaker-name">Voix off :</span> J'ai un respect infini pour ces jeunes qui choisissent ce métier. Il a été champion du monde. Il faut prendre ça ici. L'omelette du curé, la fameuse ! Le foie de veau... Oh là là ! Je ne vais pas parler de ma grand-mère ? Non, s'il te plaît !</p>
+                                <p><span class="speaker-name">Présentatrice :</span> On est à Lyon aujourd'hui. On va manger dans un restaurant que j'ai testé en 2002. Il a été repris par le chef Joseph Viola en 2004, donc c'était encore l'ancienne famille, c'était vraiment le bouchon traditionnel lyonnais. Et Joseph Viola, qui a un col bleu-blanc-rouge...</p>
+                                <p><span class="speaker-name">Intervenant :</span> D'accord.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Ah, il y a un champignon ! Quel rapport avec la choucroute ? Et depuis, voilà ! Il y a même la Vallée de la Gastronomie. Il ne manque plus que : « C'est Meilleur Quand C'est Bon ».</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Bonsoir, excusez-moi. Alors c'est par où ? Oh, il y a du vin, ça tombe bien, j'ai soif ! Bonjour !</p>
+                                <p><span class="speaker-name">Cuisinier :</span> Bonjour !</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Ah oui, il y a de la toque ! Oh la vache ! Vous avez perdu votre toque ou quoi ?</p>
+                                <p><span class="speaker-name">Cuisinier :</span> Ouais, non, j'essaie de ne pas la mettre parce que sinon...</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 2 -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-seablue-800 mb-4 pb-1 border-b border-gray-200">2. En Cuisine : Les Sauces, la Sauce Nantua et les Gratins</h3>
+                            <div class="space-y-4 text-gray-800 leading-relaxed">
+                                <p><span class="speaker-name">Présentatrice :</span> Donc là, c'est les sauces ? C'est important les sauces ici, non ?</p>
+                                <p><span class="speaker-name">Cuisinier :</span> C'est un poste clé, les sauces. Là, c'est une sauce poivre.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Ça, c'est quoi ?</p>
+                                <p><span class="speaker-name">Cuisinier :</span> La sauce Nantua. C'est des carcasses d'écrevisses qu'on va venir cardinaliser, donc rougir très fort, un peu comme moi là ! Et après, on va mettre une belle garniture aromatique, du cognac. Ça, c'est pour faire les gratins.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Le gratin de truite, là ? C'était le plat du jour. On a failli le prendre, mais comme ça, on a l'impression de l'avoir mangé un peu. Ça, c'est la cuisine lyonnaise, hein !</p>
+                                <p><span class="speaker-name">Cuisinier :</span> Généreux, de la sauce, de la crème.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Ah oui, vous en mettez beaucoup !</p>
+                                <p><span class="speaker-name">Cuisinier :</span> Il faut. C'est la crème montée qui fait gratiner la sauce.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> C'est vous le chef de la pomme de terre ? Ça, c'est quoi ? Gratin de pommes de terre, là, pommes de terre soufflées ?</p>
+                                <p><span class="speaker-name">Cuisinier :</span> Oh la vache ! Les gratins de truite à la sauce Nantua, à la crème. Ah, la quenelle magnifique ! Merci, bon service !</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 3 -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-seablue-800 mb-4 pb-1 border-b border-gray-200">3. Les Entrées Traditionnelles : Saladier Lyonnais et Pâté en Croûte</h3>
+                            <div class="space-y-4 text-gray-800 leading-relaxed">
+                                <p><span class="speaker-name">Cuisinier :</span> Le gâteau de tomates, fromage frais, sauce au pistou, un petit peu de parmesan. Saladier lyonnais : salade de museau, salade de lentilles, petits harengs fumés.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Tu vois, autrefois, dans la tradition lyonnaise, tu avais les saladiers, on te les posait comme ça et tout. Et là, il le dresse à l'assiette.</p>
+                                <p><span class="speaker-name">Serveur :</span> Bonsoir. On aura le pâté du chef.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Merci. Alors, si tu le prends seul, bah tu as ta tranche de pâté. Et sinon, là, il te le dresse dans deux assiettes. C'est pas mal plutôt de le mettre au milieu et que tu me dises : « Oh, tu as tout pris et tout ». Donc ici, il a été champion du monde [du pâté en croûte]. Il faut prendre ça ici. La croûte est dingue !</p>
+                                <p><span class="speaker-name">Intervenant :</span> C'est des Américains derrière ?</p>
+                                <p><span class="speaker-name">Présentatrice :</span> C'est le service de 19h30, il y a plein d'Américains. Moi, je pense qu'après, c'est les Lyonnais, peut-être un peu plus tard. C'était vraiment ce bouchon de quartier qui n'a pas... Tu vois, regarde le carrelage comme il est génial ! C'est vraiment le carrelage d'autrefois qui est dans son jus ! Chaque table a un nom connu dans la restauration ou dans la cuisine. Et si tu veux, c'était comme ça quand il a repris, il a tout gardé et il continue à faire cette cuisine que tu ne trouves pas forcément ailleurs.</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 4 -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-seablue-800 mb-4 pb-1 border-b border-gray-200">4. L'Omelette du Curé et les Plats Signature</h3>
+                            <div class="space-y-4 text-gray-800 leading-relaxed">
+                                <p><span class="speaker-name">Présentatrice :</span> Évidemment, le pâté en croûte, tu le vois partout, mais tu vas voir ce qui va suivre, c'est unique en France. C'est l'omelette, c'est pour nous ! L'omelette du curé, la fameuse !</p>
+                                <p><span class="speaker-name">Intervenant :</span> Bah, je croyais que c'était une quenelle.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Regarde-moi ça ! Dedans, il y a des écrevisses. C'est ce que j'ai mangé la première fois que je suis venue. Il a perpétué la tradition. Mais c'est pas bon, c'est extraordinaire ! Et quand tu viens ici, tu manges ça ! Regarde-moi cette sauce... Mais cette cuisine française qu'on ne trouve plus nulle part ! C'est comme notre copain qui faisait le poulet avec le homard. Tu vois, il faut y aller parce que... quand il y a des recettes que tu ne trouves plus nulle part. Et cette sauce Nantua, elle est incroyable !</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 5 -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-seablue-800 mb-4 pb-1 border-b border-gray-200">5. Les Plats de Viande et Abats : Veau, Rognons et Béchamel</h3>
+                            <div class="space-y-4 text-gray-800 leading-relaxed">
+                                <p><span class="speaker-name">Voix off / Serveur :</span> La volaille aux morilles, le steak au poivre, le foie de veau. Le tendron fermier avec sa sauce vierge et son jus de veau.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> On n'a pas du tout commandé ça ? Ah, c'est de la part du chef ! Alors là, c'est le plat estival : tendron de veau. Tu n'aimes pas les cadeaux, mais je vais quand même te le partager. Ça a l'air tendre, hein ! Ah bah là, on a tout compris ! C'est extraordinaire ça ! Il y a des olives dessus et de la tomate, donc il y a un côté plus provençal. Il faut le cuire longtemps pour qu'il soit moelleux comme ça. C'est très bon. Derrière toi, il y a toute la collection des Guides Michelin. C'est patrimonial ça, mon cher ami.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> La cervelle à la provençale, ça faisait partie des plats qu'il fallait prendre. Le rognon, c'est pour nous ! Sublime. Et gratin de pâtes peint en béchamel, et des pommes de terre cuites à la lyonnaise, donc dans la graisse de canard.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Tiens, regarde. Je te mets ça, je prends ça. Oh là là, mais c'est rigolo ! Et regarde, il y a des petits lardons avec les champignons et tout. Tu vois, regarde, à la goutte... et là, il est un peu saignant. Bah, c'est à tomber ! Et alors, pour accompagner ça, tu as le gratin de pâtes. Ça, c'est vraiment typiquement lyonnais. C'est le gratin de pâtes à la française, pas du tout al dente comme les Italiens. On veut surtout retrouver le plaisir de l'enfance. J'allais dire : « On ne guérit jamais de son enfance », mais c'est vrai, même pour le goût ! Et ensuite, les pommes de terre. Bravo chef !</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Franchement, j'admire vraiment ces cuisiniers, parce que non seulement il fait très chaud, mais en plus c'est hyper exigu. Ils passent comme ça, et tu sens qu'ils sont dans une espèce de retenue permanente pour ne pas se brûler, ne pas renverser les plats, ne pas se bousculer... Moi, j'ai un respect infini pour ces jeunes qui choisissent ce métier.</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 6 -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-seablue-800 mb-4 pb-1 border-b border-gray-200">6. Le Dessert : Île Flottante à la Praline Rose</h3>
+                            <div class="space-y-4 text-gray-800 leading-relaxed">
+                                <p><span class="speaker-name">Serveur :</span> Une île flottante à la praline rose.</p>
+                                <p><span class="speaker-name">Intervenant :</span> Elle flotte, ton île flottante ?</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Bah, elle flotte, ouais ! Une île flottante, déjà, c'est un seul tenant qui flotte sur quelque chose. Ce que nous avait expliqué un restaurateur, c'est qu'elle est posée sur une tranche de quelque chose, alors que les œufs à la neige, c'est plein de petits blancs qui flottent comme ça, comme des icebergs. Alors, j'y vais ?</p>
+                                <p><span class="speaker-name">Intervenant :</span> Alors ? Je ne vais pas parler de ma grand-mère ?</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Non, s'il te plaît ! Elle, elle mettait un peu de praline là-dedans et du coup, il y avait des lignes roses comme ça qui se baladaient dans la crème anglaise.</p>
+                                <p><span class="speaker-name">Intervenant :</span> Tu reviendras ? Je crois que tu es déjà revenue, de toute façon.</p>
+                                <p><span class="speaker-name">Présentatrice :</span> Je suis déjà revenue ! Aujourd'hui, il y a le championnat du monde de la praline rose en France. Ah bah, je ne savais pas ! Tu vois, personne ne m'avait dit.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "La gastronomie - Compréhension Orale Kelompok 5",
+  "description": "Aplikasi pembelajaran bahasa Prancis Compréhension Orale bertema La gastronomie oleh Kelompok 5 dengan Firebase Auth dan Cloud Firestore.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

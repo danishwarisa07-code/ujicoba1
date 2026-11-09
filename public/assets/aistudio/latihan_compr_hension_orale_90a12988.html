@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal - Co kelompok 5</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        seablue: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* SVG Circle Animation */
+        .circle-progress {
+            transition: stroke-dashoffset 1s ease-out;
+        }
+
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800 flex flex-col">
+
+    <!-- Top Bleu-Blanc-Rouge Ribbon -->
+    <div class="fixed top-0 left-0 w-full h-1.5 flex z-50">
+        <div class="w-1/3 bg-[#0055A4]"></div>
+        <div class="w-1/3 bg-gray-100"></div>
+        <div class="w-1/3 bg-[#EF4135]"></div>
+    </div>
+
+    <!-- Navigation Bar (Simple) -->
+    <nav class="bg-white shadow-sm pt-2 sticky top-0 z-40">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-4">
+                    <button onclick="window.history.back()" class="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-600 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div class="flex items-center gap-3 border-l pl-4 border-gray-200">
+                        <div class="w-8 h-8 bg-seablue-100 rounded-lg flex items-center justify-center shadow-inner">
+                            <i class="fa-solid fa-pen-to-square text-sm text-seablue-600"></i>
+                        </div>
+                        <span class="font-bold text-lg text-gray-800">Ruang Latihan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-6 w-full">
+        <div class="max-w-3xl w-full">
+            
+            <!-- STATE 1: Introduction Screen -->
+            <div id="start-screen" class="screen active bg-white rounded-2xl shadow-xl p-8 sm:p-12 text-center animate-fade-in border border-gray-100">
+                <div class="w-20 h-20 bg-seablue-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                    <i class="fas fa-headphones text-4xl text-seablue-600"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">
+                    Exercice de Compréhension Orale
+                </h1>
+                <h2 class="text-xl text-seablue-700 font-medium mb-6">
+                    Thème : Gastronomie Lyonnaise (Chez Joseph Viola)
+                </h2>
+                <div class="bg-seablue-50 text-seablue-900 p-6 rounded-xl text-left mb-8 border border-seablue-100">
+                    <h3 class="font-bold mb-2 flex items-center gap-2">
+                        <i class="fas fa-clipboard-list text-seablue-600"></i> Consignes :
+                    </h3>
+                    <p class="text-sm leading-relaxed">
+                        Lisez attentivement chaque question et choisissez la meilleure réponse en fonction de la transcription étudiée. 
+                        Cet exercice contient <strong>20 questions</strong> à choix multiples (A, B, C, D) conçues pour tester votre vocabulaire et votre compréhension détaillée. 
+                        <br><br>
+                        <em>Bon courage !</em>
+                    </p>
+                </div>
+                <button 
+                    onclick="startQuiz()"
+                    class="bg-seablue-600 hover:bg-seablue-700 text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1 text-lg flex items-center justify-center gap-3 mx-auto w-full sm:w-auto"
+                >
+                    <i class="fas fa-play"></i> Commencer l'entraînement
+                </button>
+            </div>
+
+            <!-- STATE 2: Quiz Screen -->
+            <div id="quiz-screen" class="screen bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 animate-fade-in">
+                <!-- Header / Progress -->
+                <div class="bg-gradient-to-r from-seablue-800 to-seablue-600 p-6 text-white flex justify-between items-center">
+                    <div class="font-medium">
+                        Question <span id="current-q-num" class="text-2xl font-bold">1</span> sur 20
+                    </div>
+                    <div class="bg-white/20 px-4 py-1.5 rounded-full text-sm font-semibold backdrop-blur-sm">
+                        Score : <span id="current-score">0</span>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-200 h-1.5">
+                    <div id="progress-bar" class="bg-[#EF4135] h-1.5 transition-all duration-300" style="width: 5%"></div>
+                </div>
+
+                <div class="p-6 sm:p-8">
+                    <!-- Question -->
+                    <h3 id="question-text" class="text-xl font-bold text-gray-800 mb-6 leading-snug">
+                        Question goes here
+                    </h3>
+
+                    <!-- Options -->
+                    <div id="options-container" class="space-y-3 mb-8">
+                        <!-- Options generated via JS -->
+                    </div>
+
+                    <!-- Feedback Section -->
+                    <div id="feedback-container" class="hidden p-5 rounded-xl mb-8 border-l-4 animate-fade-in">
+                        <h4 id="feedback-title" class="font-bold flex items-center gap-2 mb-1">
+                            <!-- Icon and Title -->
+                        </h4>
+                        <p id="feedback-text" class="text-sm opacity-90">Explanation goes here</p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-end pt-4 border-t border-gray-100">
+                        <button 
+                            id="btn-validate"
+                            onclick="validateAnswer()"
+                            disabled
+                            class="px-8 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 bg-gray-200 text-gray-400 cursor-not-allowed"
+                        >
+                            Valider la réponse <i class="fas fa-paper-plane"></i>
+                        </button>
+
+                        <button 
+                            id="btn-next"
+                            onclick="nextQuestion()"
+                            class="hidden px-8 py-3 bg-seablue-800 hover:bg-seablue-900 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                        >
+                            Question suivante <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATE 3: Results Screen -->
+            <div id="results-screen" class="screen bg-white rounded-2xl shadow-xl p-8 sm:p-12 text-center animate-fade-in border border-gray-100 relative overflow-hidden">
+                <i class="fas fa-award absolute -right-10 -top-10 text-[15rem] text-seablue-50 opacity-50 -rotate-12"></i>
+                
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Résultats de l'évaluation</h2>
+                    <p class="text-gray-500 mb-8">Voici votre score pour cette séance de compréhension orale.</p>
+
+                    <div class="w-40 h-40 mx-auto rounded-full border-8 border-seablue-100 flex items-center justify-center mb-6 relative">
+                        <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="46" fill="transparent" stroke="#0ea5e9" stroke-width="8" stroke-dasharray="289" id="score-circle" class="circle-progress" stroke-dashoffset="289" />
+                        </svg>
+                        <div class="text-center">
+                            <span id="final-score" class="text-4xl font-bold text-seablue-600">0</span>
+                            <span class="text-xl text-gray-400">/20</span>
+                        </div>
+                    </div>
+
+                    <div id="result-message" class="mb-10">
+                        <!-- Message goes here based on score -->
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button 
+                            onclick="restartQuiz()"
+                            class="px-6 py-3 bg-white border-2 border-seablue-600 text-seablue-700 hover:bg-seablue-50 rounded-xl font-semibold transition-colors"
+                        >
+                            <i class="fas fa-rotate-left mr-2"></i> Recommencer le test
+                        </button>
+                        <button 
+                            onclick="window.history.back()"
+                            class="px-6 py-3 bg-seablue-600 hover:bg-seablue-700 text-white rounded-xl font-semibold shadow-md transition-colors"
+                        >
+                            <i class="fas fa-house mr-2"></i> Retour à l'accueil
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Custom Toast Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <script>
+        // Data Questions
+        const questions = [
+            { question: "Qui est le chef qui a repris ce bouchon traditionnel lyonnais en 2004 ?", options: ["Paul Bocuse", "Joseph Viola", "Alain Ducasse", "Georges Blanc"], correctAnswer: 1, explanation: "Le restaurant a été repris par le chef Joseph Viola en 2004, perpétuant ainsi la tradition de l'ancienne famille." },
+            { question: "Quelle caractéristique vestimentaire montre que le chef est Meilleur Ouvrier de France (MOF) ?", options: ["Une toque très haute", "Un tablier noir", "Un col bleu-blanc-rouge", "Une veste dorée"], correctAnswer: 2, explanation: "La présentatrice souligne que Joseph Viola porte « un col bleu-blanc-rouge », symbole distinctif des Meilleurs Ouvriers de France." },
+            { question: "Que signifie le terme « cardinaliser » utilisé par le chef à propos des écrevisses ?", options: ["Les couper en petits morceaux", "Les faire rougir très fort à la cuisson", "Les mariner dans du vin blanc", "Les servir avec du fromage"], correctAnswer: 1, explanation: "Le chef explique : « cardinaliser, donc rougir très fort, un peu comme moi là ! »." },
+            { question: "Quel alcool est ajouté dans la préparation de la fameuse sauce Nantua ?", options: ["Du rhum", "Du vin rouge", "Du cognac", "Du calvados"], correctAnswer: 2, explanation: "Après avoir fait rougir les carcasses, le chef y ajoute une belle garniture aromatique et du cognac." },
+            { question: "D'après le chef, quel ingrédient permet de faire gratiner la sauce ?", options: ["Le gruyère râpé", "La crème montée", "Le beurre fondu", "La chapelure"], correctAnswer: 1, explanation: "Le chef précise : « C'est la crème montée qui fait gratiner la sauce. »" },
+            { question: "Quel plat à la sauce Nantua était le plat du jour que la présentatrice a failli prendre ?", options: ["Le gratin de truite", "La quenelle de brochet", "Le poulet de Bresse", "Le foie de veau"], correctAnswer: 0, explanation: "Elle mentionne : « Le gratin de truite, là ? C'était le plat du jour. On a failli le prendre... »" },
+            { question: "Dans la tradition lyonnaise des entrées, comment servait-on autrefois la salade de lentilles ou de museau ?", options: ["Directement sur la table sans assiette", "Dans des petits ramequins individuels", "Dans de grands saladiers posés au milieu", "Uniquement sur commande spéciale"], correctAnswer: 2, explanation: "Autrefois, on posait les « saladiers » sur la table, contrairement à la présentation moderne dressée à l'assiette." },
+            { question: "Pour quelle spécialité culinaire le chef Joseph Viola a-t-il été sacré « champion du monde » ?", options: ["Le gratin dauphinois", "L'omelette du curé", "Le pâté en croûte", "La tarte aux pralines"], correctAnswer: 2, explanation: "Il a été champion du monde du pâté en croûte. La présentatrice le recommande fortement : « Il faut prendre ça ici. La croûte est dingue ! »" },
+            { question: "Quelle clientèle étrangère est particulièrement présente lors du service de 19h30 ?", options: ["Les Japonais", "Les Américains", "Les Italiens", "Les Anglais"], correctAnswer: 1, explanation: "La présentatrice remarque qu'à 19h30, « il y a plein d'Américains », et suppose que les Lyonnais mangent plus tard." },
+            { question: "Quel ingrédient de luxe se cache à l'intérieur de la fameuse « omelette du curé » ?", options: ["Des truffes noires", "Du foie gras", "Des écrevisses", "Du homard"], correctAnswer: 2, explanation: "En ouvrant l'omelette, elle s'exclame : « Dedans, il y a des écrevisses. »" },
+            { question: "Comment la présentatrice qualifie-t-elle la sauce Nantua de cette omelette ?", options: ["Un peu trop salée", "Très légère et diététique", "Incroyable et extraordinaire", "Trop épicée à son goût"], correctAnswer: 2, explanation: "Elle décrit la recette comme « extraordinaire » et affirme que la sauce Nantua « est incroyable ! »." },
+            { question: "Quel plat est offert par le chef (« de la part du chef ») et qualifié de « plat estival » ?", options: ["Le foie de veau", "Le tendron de veau", "Le steak au poivre", "La volaille aux morilles"], correctAnswer: 1, explanation: "Le serveur annonce le tendron fermier, et la présentatrice précise : « c'est le plat estival : tendron de veau. »" },
+            { question: "Qu'est-ce qui donne un côté « plus provençal » à ce tendron de veau ?", options: ["L'utilisation de lavande", "La présence d'olives et de tomates", "L'ajout de basilic frais", "La cuisson à l'huile d'olive uniquement"], correctAnswer: 1, explanation: "Elle justifie ce côté provençal en disant : « Il y a des olives dessus et de la tomate. »" },
+            { question: "Dans quelle matière grasse les pommes de terre à la lyonnaise sont-elles cuites ?", options: ["Le beurre noisette", "L'huile de tournesol", "La graisse de canard", "Le saindoux"], correctAnswer: 2, explanation: "Elle indique clairement : « des pommes de terre cuites à la lyonnaise, donc dans la graisse de canard. »" },
+            { question: "Quelle est la particularité du gratin de pâtes servi dans ce bouchon ?", options: ["Il est servi al dente comme en Italie", "Il est cuit dans un bouillon de bœuf", "Il est en béchamel et n'est pas al dente", "Il est farci à la viande hachée"], correctAnswer: 2, explanation: "C'est un « gratin de pâtes à la française, pas du tout al dente comme les Italiens », avec de la béchamel." },
+            { question: "Selon la présentatrice, quelle difficulté physique majeure affrontent les jeunes cuisiniers dans ce restaurant ?", options: ["La cuisine est en sous-sol sans lumière", "L'espace est hyper exigu et il fait très chaud", "Ils doivent porter de lourdes charges", "Ils n'ont pas le droit de parler"], correctAnswer: 1, explanation: "Elle admire les cuisiniers car « non seulement il fait très chaud, mais en plus c'est hyper exigu. »" },
+            { question: "Quel est le dessert final commandé à la fin du repas ?", options: ["Une tarte aux pommes", "Une île flottante à la praline rose", "Un fondant au chocolat", "Des œufs à la neige classiques"], correctAnswer: 1, explanation: "Le serveur annonce clairement : « Une île flottante à la praline rose. »" },
+            { question: "Quelle est la différence technique entre une île flottante et des œufs à la neige selon les explications ?", options: ["L'île flottante est cuite au four", "L'île flottante est d'un seul tenant", "Les œufs à la neige n'ont pas de crème", "Il n'y a aucune différence culinaire"], correctAnswer: 1, explanation: "Elle explique qu'une île flottante « c'est un seul tenant » alors que les œufs à la neige « c'est plein de petits blancs qui flottent ». " },
+            { question: "Quel ingrédient la grand-mère de la présentatrice ajoutait-elle pour faire des « lignes roses » dans la crème anglaise ?", options: ["Du sirop de fraise", "De la praline", "Du colorant alimentaire", "De la confiture de framboise"], correctAnswer: 1, explanation: "Elle se souvient : « Elle mettait un peu de praline là-dedans et du coup, il y avait des lignes roses... »" },
+            { question: "Quel événement national (ou mondial) se déroule en France le jour de ce tournage, selon la fin de la vidéo ?", options: ["Le championnat du pâté en croûte", "Le championnat de la cuisine lyonnaise", "Le championnat du monde de la praline rose", "Le championnat des bouchons lyonnais"], correctAnswer: 2, explanation: "Elle découvre à la fin : « Aujourd'hui, il y a le championnat du monde de la praline rose en France. »" }
+        ];
+
+        // State Variables
+        let currentQIndex = 0;
+        let selectedOption = null;
+        let isValidated = false;
+        let score = 0;
+
+        // DOM Elements
+        const screens = {
+            start: document.getElementById('start-screen'),
+            quiz: document.getElementById('quiz-screen'),
+            results: document.getElementById('results-screen')
+        };
+        const domElements = {
+            qNum: document.getElementById('current-q-num'),
+            score: document.getElementById('current-score'),
+            progress: document.getElementById('progress-bar'),
+            qText: document.getElementById('question-text'),
+            optionsContainer: document.getElementById('options-container'),
+            btnValidate: document.getElementById('btn-validate'),
+            btnNext: document.getElementById('btn-next'),
+            feedbackCont: document.getElementById('feedback-container'),
+            feedbackTitle: document.getElementById('feedback-title'),
+            feedbackText: document.getElementById('feedback-text'),
+            finalScore: document.getElementById('final-score'),
+            scoreCircle: document.getElementById('score-circle'),
+            resultMessage: document.getElementById('result-message')
+        };
+
+        function showScreen(screenName) {
+            Object.values(screens).forEach(s => s.classList.remove('active'));
+            screens[screenName].classList.add('active');
+        }
+
+        function startQuiz() {
+            currentQIndex = 0;
+            score = 0;
+            showScreen('quiz');
+            loadQuestion();
+        }
+
+        function getLetter(index) {
+            return String.fromCharCode(65 + index);
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQIndex];
+            selectedOption = null;
+            isValidated = false;
+
+            // Update Header & Progress
+            domElements.qNum.innerText = currentQIndex + 1;
+            domElements.score.innerText = score;
+            domElements.progress.style.width = `${((currentQIndex) / questions.length) * 100}%`;
+            
+            // Set Question Text
+            domElements.qText.innerText = q.question;
+
+            // Render Options
+            renderOptions();
+
+            // Reset UI states
+            domElements.feedbackCont.classList.add('hidden');
+            domElements.btnNext.classList.add('hidden');
+            domElements.btnValidate.classList.remove('hidden');
+            
+            // Disable validate button initially
+            domElements.btnValidate.disabled = true;
+            domElements.btnValidate.className = "px-8 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 bg-gray-200 text-gray-400 cursor-not-allowed";
+        }
+
+        function selectOption(index) {
+            if (isValidated) return;
+            selectedOption = index;
+            renderOptions();
+            
+            // Enable validate button
+            domElements.btnValidate.disabled = false;
+            domElements.btnValidate.className = "px-8 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 bg-seablue-600 hover:bg-seablue-700 text-white shadow-md hover:shadow-lg";
+        }
+
+        function renderOptions() {
+            const q = questions[currentQIndex];
+            domElements.optionsContainer.innerHTML = '';
+
+            q.options.forEach((option, index) => {
+                let btnClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-4 cursor-pointer focus:outline-none ";
+                let letterClass = "w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 ";
+                let iconHtml = "";
+
+                if (!isValidated) {
+                    if (selectedOption === index) {
+                        btnClass += "border-seablue-500 bg-seablue-50 text-seablue-800 shadow-sm";
+                        letterClass += "bg-seablue-500 text-white";
+                    } else {
+                        btnClass += "border-gray-200 hover:border-seablue-300 hover:bg-gray-50 text-gray-700";
+                        letterClass += "bg-gray-200 text-gray-600";
+                    }
+                } else {
+                    if (index === q.correctAnswer) {
+                        btnClass += "border-green-500 bg-green-50 text-green-800 font-medium";
+                        letterClass += "bg-green-500 text-white";
+                        iconHtml = `<i class="fas fa-check-circle text-green-500 text-xl ml-auto"></i>`;
+                    } else if (index === selectedOption && selectedOption !== q.correctAnswer) {
+                        btnClass += "border-red-500 bg-red-50 text-red-800";
+                        letterClass += "bg-red-500 text-white";
+                        iconHtml = `<i class="fas fa-times-circle text-red-500 text-xl ml-auto"></i>`;
+                    } else {
+                        btnClass += "border-gray-100 bg-gray-50 text-gray-400 opacity-50";
+                        letterClass += "bg-gray-200 text-gray-400";
+                    }
+                }
+
+                const button = document.createElement('button');
+                button.className = btnClass;
+                button.onclick = () => selectOption(index);
+                button.disabled = isValidated;
+                
+                button.innerHTML = `
+                    <div class="${letterClass}">${getLetter(index)}</div>
+                    <span class="flex-grow">${option}</span>
+                    ${iconHtml}
+                `;
+                
+                domElements.optionsContainer.appendChild(button);
+            });
+        }
+
+        function validateAnswer() {
+            if (selectedOption === null || isValidated) return;
+            isValidated = true;
+            
+            const q = questions[currentQIndex];
+            const isCorrect = (selectedOption === q.correctAnswer);
+            
+            if (isCorrect) score++;
+            
+            // Re-render options to show correctness
+            renderOptions();
+
+            // Show feedback
+            domElements.feedbackCont.classList.remove('hidden', 'bg-green-50', 'border-green-500', 'text-green-800', 'bg-red-50', 'border-red-500', 'text-red-800');
+            
+            if (isCorrect) {
+                domElements.feedbackCont.classList.add('bg-green-50', 'border-green-500', 'text-green-800');
+                domElements.feedbackTitle.innerHTML = `<i class="fas fa-check"></i> Bonne réponse !`;
+            } else {
+                domElements.feedbackCont.classList.add('bg-red-50', 'border-red-500', 'text-red-800');
+                domElements.feedbackTitle.innerHTML = `<i class="fas fa-xmark"></i> Mauvaise réponse !`;
+            }
+            domElements.feedbackText.innerText = q.explanation;
+
+            // Toggle Action Buttons
+            domElements.btnValidate.classList.add('hidden');
+            domElements.btnNext.classList.remove('hidden');
+            
+            // If it's the last question, change next button text
+            if (currentQIndex === questions.length - 1) {
+                domElements.btnNext.innerHTML = `Voir les résultats <i class="fas fa-flag-checkered"></i>`;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQIndex < questions.length - 1) {
+                currentQIndex++;
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            showScreen('results');
+            domElements.finalScore.innerText = score;
+
+            // Animate SVG Circle
+            // Circle perimeter = 2 * PI * r = 2 * 3.14 * 46 ≈ 289
+            const circleLength = 289;
+            const offset = circleLength - (circleLength * score) / questions.length;
+            
+            // Small delay to allow CSS transition to trigger
+            setTimeout(() => {
+                domElements.scoreCircle.style.strokeDashoffset = offset;
+            }, 100);
+
+            // Determine message based on score
+            let msgHtml = '';
+            if (score >= 17) {
+                msgHtml = `<div class="text-green-600 bg-green-50 p-4 rounded-xl inline-block font-semibold">
+                              <i class="fas fa-star mr-2"></i> Félicitations ! Excellent travail, vous maîtrisez parfaitement le vocabulaire !
+                           </div>`;
+            } else if (score >= 12) {
+                msgHtml = `<div class="text-yellow-600 bg-yellow-50 p-4 rounded-xl inline-block font-semibold">
+                              <i class="fas fa-thumbs-up mr-2"></i> Pas mal ! Vous avez une bonne base, continuez à pratiquer.
+                           </div>`;
+            } else {
+                msgHtml = `<div class="text-red-600 bg-red-50 p-4 rounded-xl inline-block font-semibold">
+                              <i class="fas fa-book-open mr-2"></i> Il faut réviser le vocabulaire. Relisez attentivement la transcription !
+                           </div>`;
+            }
+            domElements.resultMessage.innerHTML = msgHtml;
+        }
+
+        function restartQuiz() {
+            // Reset circle animation
+            domElements.scoreCircle.style.strokeDashoffset = 289;
+            startQuiz();
+        }
+    </script>
+</body>
+</html>

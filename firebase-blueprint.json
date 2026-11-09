@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile & Progress",
+      "description": "User profile, cumulative study time, test completion flag, and best scores.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User UID matching auth.uid" },
+        "displayName": { "type": "string", "maxLength": 100, "description": "Full name of the learner" },
+        "email": { "type": "string", "maxLength": 150, "description": "User email address" },
+        "totalSeconds": { "type": "number", "description": "Total learning time in seconds" },
+        "postTestCompleted": { "type": "boolean", "description": "Whether user has already completed the final post-test" },
+        "postTestScore": { "type": "number", "description": "Final evaluation score out of 20" },
+        "latihanScore": { "type": "number", "description": "Best or most recent exercise score out of 20" },
+        "lastUpdated": { "type": "string", "description": "ISO timestamp of last activity update" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of account creation" }
+      },
+      "required": ["uid", "email"]
+    },
+    "QuizAttempt": {
+      "title": "Quiz / Test Attempt",
+      "description": "Individual record of an exercise or post-test attempt",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner user UID" },
+        "type": { "type": "string", "enum": ["latihan", "post-test"], "description": "Type of assessment" },
+        "score": { "type": "number", "description": "Score achieved" },
+        "maxScore": { "type": "number", "description": "Maximum possible score" },
+        "percentage": { "type": "number", "description": "Percentage score (0-100)" },
+        "completedAt": { "type": "string", "description": "ISO timestamp when attempt was submitted" }
+      },
+      "required": ["userId", "type", "score", "maxScore", "completedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profile, accumulated study timer, post-test completion lock, and score summaries."
+    },
+    "/users/{userId}/attempts/{attemptId}": {
+      "schema": "QuizAttempt",
+      "description": "Stores individual test and exercise attempts for history and analytics."
+    }
+  }
+}

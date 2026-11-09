@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - Co kelompok 5</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        seablue: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1', // Main theme color
+                            800: '#075985',
+                            900: '#0c4a6e', // Deep sea background
+                        },
+                        french: {
+                            blue: '#0055A4',
+                            white: '#FFFFFF',
+                            red: '#EF4135'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles and animations */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Sea blue gradient background */
+            background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0284c7 100%);
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden-form {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- Main Card -->
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative fade-in">
+        
+        <!-- Bleu-Blanc-Rouge Detail (French flag colors ribbon) -->
+        <div class="absolute top-0 left-0 w-full h-2 flex">
+            <div class="w-1/3 bg-french-blue"></div>
+            <div class="w-1/3 bg-gray-100"></div> <!-- Slightly off-white to contrast with card body -->
+            <div class="w-1/3 bg-french-red"></div>
+        </div>
+
+        <div class="p-8 sm:p-10 pt-12">
+            
+            <!-- Logo / Header -->
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-seablue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                    <i class="fa-solid fa-water text-3xl text-seablue-600"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Co kelompok 5</h1>
+                <p id="form-subtitle" class="text-sm text-gray-500 mt-2">Selamat datang kembali! Silakan masuk ke akun Anda.</p>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form id="login-form" class="space-y-5" onsubmit="handleAuth(event, 'login')">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-regular fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-seablue-500 focus:border-seablue-500 outline-none transition duration-200" placeholder="nama@email.com">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label class="block text-sm font-medium text-gray-700">Kata Sandi</label>
+                        <a href="#" onclick="switchForm('forgot')" class="text-xs font-semibold text-seablue-600 hover:text-seablue-800 transition">Lupa Kata Sandi?</a>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-seablue-500 focus:border-seablue-500 outline-none transition duration-200" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-seablue-600 hover:bg-seablue-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
+                    Masuk
+                </button>
+
+                <div class="flex items-center my-6">
+                    <div class="flex-grow border-t border-gray-200"></div>
+                    <span class="px-4 text-sm text-gray-400 font-medium">ATAU</span>
+                    <div class="flex-grow border-t border-gray-200"></div>
+                </div>
+
+                <button type="button" onclick="handleGoogleLogin()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 rounded-xl transition duration-200 shadow-sm">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google Logo">
+                    Masuk dengan Google
+                </button>
+
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    Belum punya akun? 
+                    <a href="#" onclick="switchForm('register')" class="font-semibold text-seablue-600 hover:text-seablue-800 transition">Daftar sekarang</a>
+                </p>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form id="register-form" class="space-y-5 hidden-form" onsubmit="handleAuth(event, 'register')">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-regular fa-user text-gray-400"></i>
+                        </div>
+                        <input type="text" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-seablue-500 focus:border-seablue-500 outline-none transition duration-200" placeholder="John Doe">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-regular fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-seablue-500 focus:border-seablue-500 outline-none transition duration-200" placeholder="nama@email.com">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-seablue-500 focus:border-seablue-500 outline-none transition duration-200" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-seablue-600 hover:bg-seablue-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
+                    Buat Akun
+                </button>
+
+                <div class="flex items-center my-6">
+                    <div class="flex-grow border-t border-gray-200"></div>
+                    <span class="px-4 text-sm text-gray-400 font-medium">ATAU</span>
+                    <div class="flex-grow border-t border-gray-200"></div>
+                </div>
+
+                <button type="button" onclick="handleGoogleLogin()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3 rounded-xl transition duration-200 shadow-sm">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google Logo">
+                    Daftar dengan Google
+                </button>
+
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    Sudah punya akun? 
+                    <a href="#" onclick="switchForm('login')" class="font-semibold text-seablue-600 hover:text-seablue-800 transition">Masuk di sini</a>
+                </p>
+            </form>
+
+            <!-- FORGOT PASSWORD FORM -->
+            <form id="forgot-form" class="space-y-5 hidden-form" onsubmit="handleAuth(event, 'forgot')">
+                <div class="bg-blue-50 text-seablue-700 p-4 rounded-xl text-sm mb-4 border border-blue-100">
+                    <i class="fa-solid fa-circle-info mr-2"></i> Masukkan email Anda yang terdaftar, dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi.
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Anda</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-regular fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-seablue-500 focus:border-seablue-500 outline-none transition duration-200" placeholder="nama@email.com">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-seablue-600 hover:bg-seablue-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
+                    Kirim Tautan Reset
+                </button>
+
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    Ingat kata sandi Anda? 
+                    <a href="#" onclick="switchForm('login')" class="font-semibold text-seablue-600 hover:text-seablue-800 transition">Kembali ke Masuk</a>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        function switchForm(target) {
+            // Dapatkan elemen
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const forgotForm = document.getElementById('forgot-form');
+            const subtitle = document.getElementById('form-subtitle');
+
+            // Reset visibilitas dengan menambahkan animasi singkat
+            [loginForm, registerForm, forgotForm].forEach(form => {
+                form.classList.add('hidden-form');
+                form.classList.remove('fade-in');
+            });
+
+            // Tampilkan form yang ditargetkan
+            if (target === 'login') {
+                loginForm.classList.remove('hidden-form');
+                loginForm.classList.add('fade-in');
+                subtitle.textContent = "Selamat datang kembali! Silakan masuk ke akun Anda.";
+                document.title = "Masuk - Co kelompok 5";
+            } 
+            else if (target === 'register') {
+                registerForm.classList.remove('hidden-form');
+                registerForm.classList.add('fade-in');
+                subtitle.textContent = "Buat akun baru untuk mulai menggunakan layanan kami.";
+                document.title = "Daftar - Co kelompok 5";
+            } 
+            else if (target === 'forgot') {
+                forgotForm.classList.remove('hidden-form');
+                forgotForm.classList.add('fade-in');
+                subtitle.textContent = "Jangan khawatir, kami akan membantu Anda.";
+                document.title = "Lupa Kata Sandi - Co kelompok 5";
+            }
+        }
+
+        // Custom Toast Notification Function (Pengganti alert)
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            // Konfigurasi warna berdasarkan tipe
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-seablue-600';
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-info-circle';
+
+            toast.className = `${bgColor} text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 transform transition-all duration-300 translate-x-full opacity-0`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icon}"></i>
+                <span class="font-medium text-sm">${message}</span>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Trigger animation in
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full', 'opacity-0');
+            }, 10);
+
+            // Hapus toast setelah 3 detik
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function handleAuth(event, type) {
+            event.preventDefault(); // Mencegah reload halaman
+            
+            // Simulasi proses
+            let button = event.target.querySelector('button[type="submit"]');
+            let originalText = button.innerHTML;
+            button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memproses...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                if (type === 'login') {
+                    showToast('Berhasil masuk! Mengalihkan...', 'success');
+                    event.target.reset();
+                } else if (type === 'register') {
+                    showToast('Akun berhasil dibuat! Silakan masuk.', 'success');
+                    event.target.reset();
+                    switchForm('login');
+                } else if (type === 'forgot') {
+                    showToast('Tautan reset telah dikirim ke email Anda!', 'success');
+                    event.target.reset();
+                    switchForm('login');
+                }
+            }, 1500);
+        }
+
+        function handleGoogleLogin() {
+            showToast('Membuka popup Google Login...', 'info');
+            // Logika autentikasi OAuth Google diletakkan di sini
+        }
+    </script>
+</body>
+</html>

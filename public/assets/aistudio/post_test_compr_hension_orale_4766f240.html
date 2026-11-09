@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Test - Co kelompok 5</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        sky: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff; /* sky-50 */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulseOnce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .animate-pulse-once {
+            animation: pulseOnce 1s ease-in-out;
+        }
+
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800 flex flex-col relative">
+
+    <!-- Top Bleu-Blanc-Rouge Ribbon -->
+    <div class="fixed top-0 left-0 w-full h-1.5 flex z-50">
+        <div class="w-1/3 bg-[#0055A4]"></div>
+        <div class="w-1/3 bg-gray-100"></div>
+        <div class="w-1/3 bg-[#EF4135]"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm pt-2 sticky top-0 z-40">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-sky-100 rounded-lg flex items-center justify-center shadow-inner">
+                        <i class="fa-solid fa-graduation-cap text-sm text-sky-600"></i>
+                    </div>
+                    <span class="font-bold text-lg text-gray-800">Évaluation Finale (Post-Test)</span>
+                </div>
+                <div id="status-badge" class="hidden text-sm font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-md">
+                    Examen en cours
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-6">
+        <div class="max-w-3xl w-full">
+            
+            <!-- STATE 0: Locked Screen -->
+            <div id="screen-locked" class="screen bg-white rounded-2xl shadow-xl p-8 sm:p-12 text-center animate-fade-in border-t-4 border-red-500">
+                <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 text-red-500 text-4xl">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">Accès Verrouillé</h1>
+                <p class="text-gray-600 mb-8 max-w-lg mx-auto">
+                    Vous avez déjà passé cette évaluation finale. Conformément aux règles pédagogiques, ce test ne peut être effectué qu'<strong>une seule fois</strong>.
+                </p>
+                <div class="bg-gray-50 p-4 rounded-xl text-sm text-gray-500 mb-8 border border-gray-200">
+                    Si vous avez rencontré un problème technique ou avez besoin d'une réinitialisation, veuillez contacter votre administrateur.
+                </div>
+                <button onclick="returnToDashboard()" class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-8 rounded-xl shadow transition-all">
+                    <i class="fas fa-arrow-left mr-2"></i> Retour au tableau de bord
+                </button>
+            </div>
+
+            <!-- STATE 1: Intro/Warning Screen -->
+            <div id="screen-intro" class="screen bg-white rounded-2xl shadow-xl p-8 sm:p-12 text-center animate-fade-in border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-50 rounded-bl-full -z-10"></div>
+                
+                <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner border border-amber-200">
+                    <i class="fas fa-triangle-exclamation text-3xl text-amber-600"></i>
+                </div>
+                
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">
+                    Post-Test : Poulet au Vinaigre
+                </h1>
+                
+                <div class="bg-amber-50 text-amber-900 p-6 rounded-xl text-left mb-8 border border-amber-200">
+                    <h3 class="font-bold mb-3 flex items-center gap-2 text-amber-700">
+                        <i class="fas fa-circle-info"></i> Consignes Importantes :
+                    </h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+                        <li>Ce test contient <strong>20 questions</strong> basées sur la vidéo de la recette de Paul Bocuse.</li>
+                        <li><strong>Attention :</strong> Cette épreuve est strictement limitée à <strong>UNE SEULE tentative</strong>.</li>
+                        <li>Une fois soumise, votre note sera enregistrée définitivement sur le serveur.</li>
+                        <li>Assurez-vous d'avoir une connexion internet stable avant de commencer.</li>
+                    </ul>
+                </div>
+
+                <!-- Video Embedding Section -->
+                <div class="mb-8 p-4 sm:p-6 bg-sky-50 rounded-xl border border-sky-100 shadow-inner">
+                    <h3 class="font-bold text-lg mb-2 flex items-center justify-center gap-2 text-sky-900">
+                        <i class="fab fa-youtube text-red-600 text-xl"></i> Vidéo de Référence
+                    </h3>
+                    <p class="text-sm text-sky-700 mb-6 max-w-lg mx-auto">
+                        Veuillez regarder attentivement cette vidéo avant de commencer l'évaluation. <br/>
+                        <span class="italic opacity-80">(Silakan tonton video ini dengan saksama sebelum memulai post-test).</span>
+                    </p>
+                    
+                    <!-- Responsive 16:9 YouTube Container -->
+                    <div class="relative w-full rounded-xl overflow-hidden shadow-md border-2 border-white" style="padding-top: 56.25%;">
+                        <iframe 
+                            class="absolute top-0 left-0 w-full h-full"
+                            src="https://www.youtube.com/embed/PA10l4Qy3yg" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <button onclick="startTest()" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1 text-lg flex items-center justify-center gap-3 mx-auto w-full sm:w-auto">
+                    J'ai compris, commencer l'examen <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- STATE 2: Quiz Screen -->
+            <div id="screen-quiz" class="screen bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 animate-fade-in">
+                <!-- Header / Progress -->
+                <div class="bg-gray-50 border-b border-gray-200 p-6 flex justify-between items-center">
+                    <div class="font-medium text-gray-500">
+                        Question <span id="current-q-num" class="text-xl font-bold text-sky-700">1</span> / 20
+                    </div>
+                    <!-- Progress Indicators -->
+                    <div id="progress-dots" class="flex gap-1">
+                        <!-- Dots injected via JS -->
+                    </div>
+                </div>
+
+                <div class="p-6 sm:p-10">
+                    <!-- Question Text -->
+                    <h3 id="question-text" class="text-xl font-bold text-gray-800 mb-8 leading-snug">
+                        Question goes here
+                    </h3>
+
+                    <!-- Options List -->
+                    <div id="options-container" class="space-y-3 mb-10">
+                        <!-- Options injected via JS -->
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-between items-center pt-6 border-t border-gray-100">
+                        <button 
+                            id="btn-prev"
+                            onclick="handlePrevious()"
+                            class="px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+                        >
+                            <i class="fas fa-arrow-left"></i> Précédent
+                        </button>
+
+                        <button 
+                            id="btn-next"
+                            onclick="handleNext()"
+                            class="px-8 py-3 rounded-xl font-semibold shadow transition-all flex items-center gap-2 bg-gray-200 text-gray-400 cursor-not-allowed"
+                            disabled
+                        >
+                            Suivant <i class="fas fa-arrow-right"></i>
+                        </button>
+                        
+                        <button 
+                            id="btn-submit"
+                            onclick="handleSubmit()"
+                            class="hidden px-8 py-3 rounded-xl font-bold shadow-lg transition-all flex items-center gap-2 bg-gray-200 text-gray-400 cursor-not-allowed"
+                            disabled
+                        >
+                            <i class="fas fa-flag-checkered"></i> Soumettre l'évaluation
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATE 3: Results Screen -->
+            <div id="screen-results" class="screen bg-white rounded-2xl shadow-xl p-8 sm:p-12 text-center animate-fade-in border-t-8 border-sky-600 relative overflow-hidden">
+                <i class="fas fa-certificate absolute -left-10 -bottom-10 text-[12rem] text-sky-50 opacity-60 rotate-12"></i>
+                
+                <div class="relative z-10">
+                    <div class="text-sm font-bold tracking-widest text-gray-400 uppercase mb-2">Évaluation Terminée</div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Bilan de vos compétences</h2>
+                    
+                    <div class="bg-sky-50 rounded-2xl p-6 sm:p-10 mb-8 inline-block shadow-inner border border-sky-100">
+                        <div class="text-gray-500 font-medium mb-2">Votre Score Officiel</div>
+                        <div class="flex items-baseline justify-center gap-2">
+                            <span id="final-score-display" class="text-6xl font-black text-sky-700">0</span>
+                            <span class="text-2xl text-sky-400 font-bold">/ 20</span>
+                        </div>
+                        
+                        <!-- Feedback Message Based on Score -->
+                        <div id="feedback-message" class="mt-4 pt-4 border-t border-sky-200/50">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                    <p class="text-gray-500 text-sm mb-10 max-w-md mx-auto">
+                        <i class="fas fa-check-circle text-green-500 mr-1"></i> 
+                        Votre résultat a été enregistré de manière permanente et synchronisé avec le serveur. Vous ne pouvez plus modifier vos réponses.
+                    </p>
+
+                    <button onclick="returnToDashboard()" class="px-8 py-4 bg-gray-800 hover:bg-gray-900 text-white rounded-xl font-bold shadow-lg transition-transform hover:-translate-y-1">
+                        <i class="fas fa-home mr-2"></i> Retour au tableau de bord
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const questions = [
+            { question: "Où se situe historiquement le mythique restaurant du chef Paul Bocuse présenté dans la vidéo ?", options: ["À Paris", "À Collonges-au-Mont-d'Or", "À Marseille", "À Bordeaux"], correctAnswer: 1 },
+            { question: "Combien d'étoiles Michelin cet établissement historique a-t-il conservées pendant plusieurs décennies ?", options: ["Une étoile", "Deux étoiles", "Trois étoiles", "Aucune"], correctAnswer: 2 },
+            { question: "Quel est l'ingrédient principal de la recette emblématique détaillée dans cette séquence ?", options: ["Le bœuf bourguignon", "Le poulet au vinaigre", "Le canard à l'orange", "Le saumon à l'oseille"], correctAnswer: 1 },
+            { question: "Que fait-on subir aux morceaux de volaille au tout début de la préparation culinaire ?", options: ["On les fait bouillir dans l'eau salée", "On les fait rissoler et dorer dans du beurre", "On les cuit doucement à la vapeur", "On les marine pendant 24 heures"], correctAnswer: 1 },
+            { question: "Quel type de vinaigre est traditionnellement recommandé pour déglacer cette recette ?", options: ["Du vinaigre balsamique sucré", "Du bon vinaigre de vin (rouge ou vieux)", "Du vinaigre de cidre doux", "Du vinaigre blanc d'alcool"], correctAnswer: 1 },
+            { question: "Dans le vocabulaire gastronomique, que signifie l'action de « déglacer » la poêle avec le vinaigre ?", options: ["Refroidir la viande très rapidement", "Dissoudre et récupérer les sucs de cuisson accrochés au fond", "Enlever le gras excédentaire de la sauce", "Retirer la peau de la volaille"], correctAnswer: 1 },
+            { question: "Quel ingrédient aromatique est couramment ajouté (souvent en chemise) pendant la cuisson de ce plat ?", options: ["L'ail", "L'oignon rouge", "Le poireau", "La carotte"], correctAnswer: 0 },
+            { question: "Quel liquide ajoute-t-on après le vinaigre pour mouiller la viande et créer le fond de la sauce ?", options: ["Du lait entier", "Du bouillon de volaille (ou un peu d'eau)", "Du jus de pomme", "De la bière brune"], correctAnswer: 1 },
+            { question: "Comment obtient-on la texture onctueuse et nappante finale de cette fameuse sauce lyonnaise ?", options: ["En ajoutant de la farine", "En mixant des légumes racines", "En incorporant de la crème fraîche et/ou du beurre", "En mettant du fromage râpé"], correctAnswer: 2 },
+            { question: "Quel est l'objectif principal lorsqu'on laisse « réduire » la sauce à feu doux ?", options: ["Refroidir le plat avant le service", "Épaissir le liquide pour en concentrer les saveurs", "Changer la couleur de la viande", "Rendre le plat moins calorique"], correctAnswer: 1 },
+            { question: "Quelle herbe fraîche, souvent ciselée, vient parfumer et colorer ce plat au moment du dressage ?", options: ["La menthe", "Le romarin", "L'estragon (ou le persil)", "Le basilic"], correctAnswer: 2 },
+            { question: "Comment appelle-t-on le récipient lourd (souvent en fonte) utilisé pour mijoter ce type de plat traditionnel ?", options: ["Une marmite", "Une cocotte", "Un wok", "Une friteuse"], correctAnswer: 1 },
+            { question: "Comment la viande doit-elle être cuite avec le couvercle pour garantir la réussite du plat ?", options: ["Saignante à cœur", "Cuite à l'étouffée pour rester très moelleuse", "Frite et extrêmement croquante", "Totalement crue à l'intérieur"], correctAnswer: 1 },
+            { question: "Avant d'envoyer l'assiette au client, quelle est la dernière étape cruciale du chef ?", options: ["Napper généreusement les morceaux de poulet avec la sauce", "Saupoudrer de sucre glace", "Couper la viande en minuscules dés", "Servir la sauce à part dans un petit ramequin"], correctAnswer: 0 },
+            { question: "Quel équilibre de saveurs caractérise particulièrement le poulet au vinaigre ?", options: ["L'amer et le piquant extrêmes", "L'acidité du vinaigre adoucie par la crème (aigre-doux subtil)", "Le très sucré et le salé", "L'insipide et le très gras"], correctAnswer: 1 },
+            { question: "Par qui l'héritage d'excellence de Paul Bocuse est-il rigoureusement maintenu aujourd'hui dans ses cuisines ?", options: ["Par des machines automatisées", "Par sa fidèle brigade et ses chefs exécutifs", "Par des étudiants stagiaires uniquement", "Le restaurant a définitivement fermé"], correctAnswer: 1 },
+            { question: "Quel signe distinctif sur la veste de ces grands chefs indique le titre prestigieux de Meilleur Ouvrier de France (MOF) ?", options: ["Un tablier entièrement doré", "Une étoile brodée sur le cœur", "Un col aux couleurs du drapeau (bleu-blanc-rouge)", "Une haute toque noire"], correctAnswer: 2 },
+            { question: "Que symbolise historiquement la cuisine de Paul Bocuse dans le monde entier ?", options: ["La cuisine moléculaire et chimique", "La grande tradition bourgeoise et la générosité du terroir", "La restauration rapide de luxe", "La diététique stricte"], correctAnswer: 1 },
+            { question: "Quel est l'accompagnement le plus classique servi avec un plat en sauce lyonnais de ce type ?", options: ["Des frites industrielles", "Des pommes de terre, un gratin ou des macaronis", "Une salade de fruits exotiques", "Du pain de mie grillé"], correctAnswer: 1 },
+            { question: "Quel surnom honorifique donnait-on souvent à Paul Bocuse dans le milieu de la haute gastronomie ?", options: ["Le roi des desserts", "Le cuisinier du siècle (ou le Pape de la gastronomie)", "Le boucher de Lyon", "Le petit chef"], correctAnswer: 1 }
+        ];
+
+        // State Variables
+        let state = {
+            locked: false,
+            hasStarted: false,
+            currentQIndex: 0,
+            selectedOption: null,
+            userAnswers: new Array(questions.length).fill(null),
+            isFinished: false,
+            finalScore: 0
+        };
+
+        // DOM Elements
+        const screens = {
+            locked: document.getElementById('screen-locked'),
+            intro: document.getElementById('screen-intro'),
+            quiz: document.getElementById('screen-quiz'),
+            results: document.getElementById('screen-results')
+        };
+        const domElements = {
+            statusBadge: document.getElementById('status-badge'),
+            qNum: document.getElementById('current-q-num'),
+            dotsCont: document.getElementById('progress-dots'),
+            qText: document.getElementById('question-text'),
+            optCont: document.getElementById('options-container'),
+            btnPrev: document.getElementById('btn-prev'),
+            btnNext: document.getElementById('btn-next'),
+            btnSubmit: document.getElementById('btn-submit'),
+            scoreDisplay: document.getElementById('final-score-display'),
+            feedbackMsg: document.getElementById('feedback-message')
+        };
+
+        // Initialization
+        window.onload = () => {
+            const hasTakenTest = localStorage.getItem('co_post_test_taken');
+            if (hasTakenTest === 'true') {
+                state.locked = true;
+            }
+            updateView();
+        };
+
+        function showScreen(screenKey) {
+            Object.values(screens).forEach(s => s.classList.remove('active'));
+            screens[screenKey].classList.add('active');
+        }
+
+        function updateView() {
+            if (state.locked && !state.isFinished) {
+                showScreen('locked');
+                domElements.statusBadge.classList.add('hidden');
+            } else if (!state.locked && !state.hasStarted && !state.isFinished) {
+                showScreen('intro');
+                domElements.statusBadge.classList.add('hidden');
+            } else if (!state.locked && state.hasStarted && !state.isFinished) {
+                showScreen('quiz');
+                domElements.statusBadge.classList.remove('hidden');
+                renderQuiz();
+            } else if (state.isFinished) {
+                showScreen('results');
+                domElements.statusBadge.classList.add('hidden');
+            }
+        }
+
+        function startTest() {
+            state.hasStarted = true;
+            state.selectedOption = state.userAnswers[state.currentQIndex];
+            updateView();
+        }
+
+        function getLetter(index) {
+            return String.fromCharCode(65 + index);
+        }
+
+        function renderQuiz() {
+            const q = questions[state.currentQIndex];
+            
+            // Header
+            domElements.qNum.innerText = state.currentQIndex + 1;
+            
+            // Progress Dots
+            domElements.dotsCont.innerHTML = '';
+            questions.forEach((_, idx) => {
+                const dot = document.createElement('div');
+                let classes = "h-2 rounded-full ";
+                if (idx === state.currentQIndex) {
+                    classes += "w-3 bg-sky-600";
+                } else if (state.userAnswers[idx] !== null) {
+                    classes += "w-2 sm:w-3 bg-sky-200";
+                } else {
+                    classes += "w-2 sm:w-3 bg-gray-200";
+                }
+                dot.className = classes;
+                domElements.dotsCont.appendChild(dot);
+            });
+
+            // Question
+            domElements.qText.innerText = q.question;
+
+            // Options
+            domElements.optCont.innerHTML = '';
+            q.options.forEach((option, index) => {
+                const isSelected = state.selectedOption === index;
+                
+                const btn = document.createElement('button');
+                btn.onclick = () => selectOption(index);
+                
+                let btnClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-4 focus:outline-none ";
+                let letterClass = "w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 transition-colors ";
+                let radioClass = "w-5 h-5 rounded-full border-2 flex items-center justify-center ";
+                let radioInner = "";
+
+                if (isSelected) {
+                    btnClass += "border-sky-500 bg-sky-50 text-sky-900 font-medium shadow-sm ring-2 ring-sky-200";
+                    letterClass += "bg-sky-600 text-white";
+                    radioClass += "border-sky-600";
+                    radioInner = '<div class="w-2.5 h-2.5 bg-sky-600 rounded-full"></div>';
+                } else {
+                    btnClass += "border-gray-200 hover:border-sky-300 hover:bg-gray-50 text-gray-700";
+                    letterClass += "bg-gray-100 text-gray-500";
+                    radioClass += "border-gray-300";
+                }
+
+                btn.className = btnClass;
+                btn.innerHTML = `
+                    <div class="${letterClass}">${getLetter(index)}</div>
+                    <span class="flex-grow">${option}</span>
+                    <div class="${radioClass}">${radioInner}</div>
+                `;
+                
+                domElements.optCont.appendChild(btn);
+            });
+
+            // Navigation Buttons
+            // Previous
+            if (state.currentQIndex === 0) {
+                domElements.btnPrev.disabled = true;
+                domElements.btnPrev.className = "px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 text-gray-300 cursor-not-allowed";
+            } else {
+                domElements.btnPrev.disabled = false;
+                domElements.btnPrev.className = "px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 text-gray-500 hover:bg-gray-100 hover:text-gray-800";
+            }
+
+            // Next / Submit Logic
+            const hasSelection = state.selectedOption !== null;
+            
+            if (state.currentQIndex < questions.length - 1) {
+                domElements.btnSubmit.classList.add('hidden');
+                domElements.btnNext.classList.remove('hidden');
+                
+                if (hasSelection) {
+                    domElements.btnNext.disabled = false;
+                    domElements.btnNext.className = "px-8 py-3 rounded-xl font-semibold shadow transition-all flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white";
+                } else {
+                    domElements.btnNext.disabled = true;
+                    domElements.btnNext.className = "px-8 py-3 rounded-xl font-semibold shadow transition-all flex items-center gap-2 bg-gray-200 text-gray-400 cursor-not-allowed";
+                }
+            } else {
+                domElements.btnNext.classList.add('hidden');
+                domElements.btnSubmit.classList.remove('hidden');
+                
+                if (hasSelection) {
+                    domElements.btnSubmit.disabled = false;
+                    domElements.btnSubmit.className = "px-8 py-3 rounded-xl font-bold shadow-lg transition-all flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white animate-pulse-once";
+                } else {
+                    domElements.btnSubmit.disabled = true;
+                    domElements.btnSubmit.className = "px-8 py-3 rounded-xl font-bold shadow-lg transition-all flex items-center gap-2 bg-gray-200 text-gray-400 cursor-not-allowed";
+                }
+            }
+        }
+
+        function selectOption(index) {
+            state.selectedOption = index;
+            renderQuiz();
+        }
+
+        function handleNext() {
+            if (state.selectedOption === null) return;
+            
+            // Save answer
+            state.userAnswers[state.currentQIndex] = state.selectedOption;
+            
+            if (state.currentQIndex < questions.length - 1) {
+                state.currentQIndex++;
+                state.selectedOption = state.userAnswers[state.currentQIndex];
+                renderQuiz();
+            }
+        }
+
+        function handlePrevious() {
+            if (state.currentQIndex > 0) {
+                state.currentQIndex--;
+                state.selectedOption = state.userAnswers[state.currentQIndex];
+                renderQuiz();
+            }
+        }
+
+        function handleSubmit() {
+            if (state.selectedOption === null) return;
+            
+            // Save last answer
+            state.userAnswers[state.currentQIndex] = state.selectedOption;
+
+            // Calculate Score
+            let score = 0;
+            state.userAnswers.forEach((ans, index) => {
+                if (ans === questions[index].correctAnswer) {
+                    score++;
+                }
+            });
+
+            state.finalScore = score;
+            state.isFinished = true;
+            
+            // Lock test
+            localStorage.setItem('co_post_test_taken', 'true');
+            
+            renderResults();
+            updateView();
+        }
+
+        function renderResults() {
+            domElements.scoreDisplay.innerText = state.finalScore;
+            
+            let feedbackHtml = "";
+            if (state.finalScore >= 17) {
+                feedbackHtml = '<span class="text-green-600 font-bold"><i class="fas fa-star text-yellow-400"></i> Excellent ! Mention Très Bien.</span>';
+            } else if (state.finalScore >= 14) {
+                feedbackHtml = '<span class="text-sky-600 font-bold">Bon travail ! Vous avez acquis l\'essentiel.</span>';
+            } else if (state.finalScore >= 10) {
+                feedbackHtml = '<span class="text-amber-600 font-bold">Passable. Il faudra revoir certaines notions.</span>';
+            } else {
+                feedbackHtml = '<span class="text-red-500 font-bold">Insuffisant. La compréhension est à retravailler.</span>';
+            }
+            
+            domElements.feedbackMsg.innerHTML = feedbackHtml;
+        }
+
+        function returnToDashboard() {
+            alert("Retour au tableau de bord... (Navigasi kembali ke Dashboard Utama)");
+            // window.location.href = 'dashboard.html'; // Adjust logic in your app
+        }
+    </script>
+</body>
+</html>
